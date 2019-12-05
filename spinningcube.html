@@ -43,10 +43,13 @@
 
             var animate = function () { //This is the render/animate loop.
                 requestAnimationFrame(animate);
-
+                //This will create a loop to cause the redner to draw the scene every time
+                //the screen is refreshed, 60fps.
+                //requestAnimationFrame > setInterval because it pauses when user navigates to another tab.
+                //hence not wasting their processing power/battery life.
                 cube.rotation.x += 0.01;
                 cube.rotation.y += 0.01;
-
+                
                 renderer.render(scene, camera);
             };
 
