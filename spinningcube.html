@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>My first three.js app</title>
+        <style>
+            body { margin: 0; }
+            canvas { width: 100%; height: 100%; }
+        </style>
+    </head>
+
+    <body>
+        <script src="js/three.js"></script>
+        <script>
+            var scene = new THREE.Scene(); 
+            //Setting up the scene.
+            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+            //Setting up the camera. 
+            //1st attribute is FOV, set in degrees.
+            //2nd attribute is aspect ratio. Width divided by the height or image looks squashed.
+            //3rd and 4th attributes are the near and far clipping plane i.e. depth of rendering field. 
+            //Anything outside these values will not be rendered.
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            //Set the size of area we want to fill with our app.
+            //For performance intensive apps, you can give setSize smaller values e.g. window.innerHeight/2.
+            //To render at lower reoslutions, set third argument, updateStyle, to false 
+            //e.g. window.innerHeight/2, false, as canvas is at 100%
+            document.body.appendChild(renderer.domElement);
+            //Adding renderer element to our HTML document <canvas>
+
+            var geometry = new THREE.BoxGeometry(1, 1, 1);
+            //This is an object that contains all the vertices and faces of the cube.
+            var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            //Three.js comes with several materials. All materials take an object of properties which will be
+            //applied to them. Here, we've only suppliedd the colour attribute using hex.
+            var cube = new THREE.Mesh(geometry, material);
+            //This is the mesh. A mmesh is an object that takes a geometry and applies a material to it.
+            scene.add(cube);
+            //By default, when a thing (object or camera) is added, its coordinates are 0,0,0.
+            ///To avoid the camera and object being inside each other, we will move the camera out (see below).
+
+            camera.position.z = 5;
+
+            var animate = function () { //This is the render/animate loop.
+                requestAnimationFrame(animate);
+
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+        </script>
+    </body>
+</html>
